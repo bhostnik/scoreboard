@@ -7,13 +7,16 @@ function getKey(home, away) {
 export default function useScoreboard() {
 
     const [games, setGames] = useState({});
-    const [index, setIndex] = useState(0);
+
+    //returns max index or -1 if no games
+    const maxIndex = (g) => {
+        return Object.values(g).map(x => x.index).reduce((acc, current) => Math.max(acc, current), -1);
+    }
 
     const startMatch = (home, away) => {
         const key = getKey(home, away);
 
-        setGames(g => ({ ...g, [key]: { home, away, homeScore: 0, awayScore: 0, index } }));
-        setIndex(i => i + 1);
+        setGames(g => ({ ...g, [key]: { home, away, homeScore: 0, awayScore: 0, index: maxIndex(g)+1 } }));
     }
 
     const updateScore = (home, away, homeScore, awayScore) => {

@@ -87,5 +87,15 @@ describe("useScoreboard test cases", () => {
             }]);
     });
 
+    test("starting mathes inside the same render", () => {
+        const { result } = renderHook(useScoreboard);
+
+        act(() => {
+            result.current.startMatch("Mexico", "Canada");
+            result.current.startMatch("Spain", "Brazil");
+        });
+
+        expect(result.current.gamesInProgress[0].index).toBeGreaterThan(result.current.gamesInProgress[1].index);
+    });
 
 });

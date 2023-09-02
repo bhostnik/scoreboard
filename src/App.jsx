@@ -40,7 +40,6 @@ function GameCard({ game, updateScore, finishMatch }) {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField
-              required
               id="homeScore"
               name="homeScore"
               label="Home"
@@ -53,7 +52,6 @@ function GameCard({ game, updateScore, finishMatch }) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              required
               id="awayScore"
               name="awayScore"
               label="Away"
@@ -79,6 +77,87 @@ function GameCard({ game, updateScore, finishMatch }) {
   );
 }
 
+function AddCard({ startMatch }) {
+  const [showInputFields, setShowInputFields] = useState(false);
+  const [homeTeam, setHomeTeam] = useState('');
+  const [awayTeam, setAwayTeam] = useState('');
+
+  const onStartClick = () => {
+    if (homeTeam && awayTeam) {
+      startMatch(homeTeam, awayTeam);
+      // Reset the input fields and hide them
+      setHomeTeam('');
+      setAwayTeam('');
+      setShowInputFields(false);
+    }
+  };
+
+  const onCancelClick = () => {
+    setHomeTeam('');
+    setAwayTeam('');
+    setShowInputFields(false);
+  };
+
+  return (
+    <Card>
+      <CardContent sx={{ flexGrow: 1 }}>
+        {showInputFields ? (
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="homeTeam"
+                name="homeTeam"
+                label="Home team"
+                fullWidth
+                variant="standard"
+                value={homeTeam}
+                onChange={(e) => setHomeTeam(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="awayTeam"
+                name="awayTeam"
+                label="Away team"
+                fullWidth
+                variant="standard"
+                value={awayTeam}
+                onChange={(e) => setAwayTeam(e.target.value)}
+              />
+            </Grid>
+          </Grid>
+        ) : (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '36px', // Adjust the font size to make it bigger
+              cursor: 'pointer',
+            }}
+            onClick={() => setShowInputFields(!showInputFields)}
+          >
+            <Typography variant="h1">
+              +
+            </Typography>
+          </div>
+        )}
+      </CardContent>
+      <CardActions>
+        {showInputFields && (
+          <Button size="small" onClick={onStartClick}>
+            Start
+          </Button>
+        )}
+        {showInputFields && (
+          <Button size="small" onClick={onCancelClick}>
+            Cancel
+          </Button>
+        )}
+      </CardActions>
+    </Card>
+  );
+}
 
 function App() {
   const { startMatch, updateScore, finishMatch, games, gamesInProgress } = useScoreboard();
@@ -88,7 +167,7 @@ function App() {
     startMatch("Joe", "Mike");
     startMatch("Niko", "Tone");
     startMatch("Pehta", "Uruguay");
-    updateScore("Slovenia", "Slovakia",2,3);
+    updateScore("Slovenia", "Slovakia", 2, 3);
   }, []);
 
   return (
@@ -103,6 +182,9 @@ function App() {
                     <GameCard game={game} updateScore={updateScore} finishMatch={finishMatch} />
                   </Grid>
                 ))}
+                <Grid item key="add" xs={12} sm={6}>
+                  <AddCard startMatch={startMatch} />
+                </Grid>
               </Grid>
             </Container>
           </Grid>

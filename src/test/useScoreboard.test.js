@@ -98,4 +98,20 @@ describe("useScoreboard test cases", () => {
         expect(result.current.gamesInProgress[0].index).toBeGreaterThan(result.current.gamesInProgress[1].index);
     });
 
+    test("assure readding does not loose existing score", () => {
+        const { result } = renderHook(useScoreboard);
+
+        act(() => result.current.startMatch("Mexico", "Canada"));
+        act(() => result.current.updateScore("Mexico", "Canada", 2, 5));
+        act(() => result.current.startMatch("Mexico", "Canada"));
+
+        expect(result.current.gamesInProgress).toMatchObject([
+            {
+                home: "Mexico",
+                away: "Canada",
+                homeScore: 2,
+                awayScore: 5
+            }]);
+    });
+
 });

@@ -16,7 +16,10 @@ export default function useScoreboard() {
     const startMatch = (home, away) => {
         const key = getKey(home, away);
 
-        setGames(g => ({ ...g, [key]: { home, away, homeScore: 0, awayScore: 0, index: maxIndex(g)+1 } }));
+        setGames(g => (
+            g[key] ? g : //prevent readding an existing game
+            { ...g, [key]: { home, away, homeScore: 0, awayScore: 0, index: maxIndex(g)+1 } }
+        ));
     }
 
     const updateScore = (home, away, homeScore, awayScore) => {

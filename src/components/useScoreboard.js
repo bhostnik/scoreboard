@@ -13,6 +13,11 @@ export default function useScoreboard() {
         return Object.values(g).map(x => x.index).reduce((acc, current) => Math.max(acc, current), -1);
     }
 
+    //returns parseable positive int value, else zero
+    const safeScore = (score) => {
+        return Math.max(parseInt(score) || 0, 0);
+    }
+
     const startMatch = (home, away) => {
         const key = getKey(home, away);
 
@@ -25,7 +30,7 @@ export default function useScoreboard() {
     const updateScore = (home, away, homeScore, awayScore) => {
         const key = getKey(home, away);
 
-        setGames(g => ({ ...g, [key]: { ...g[key], home, away, homeScore, awayScore } }));
+        setGames(g => ({ ...g, [key]: { ...g[key], home, away, homeScore: safeScore(homeScore), awayScore: safeScore(awayScore) } }));
     }
 
     const finishMatch = (home, away) => {

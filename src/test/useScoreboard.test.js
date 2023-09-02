@@ -114,4 +114,54 @@ describe("useScoreboard test cases", () => {
             }]);
     });
 
+    test("allow setting non numerical score, but use zero", () => {
+        const { result } = renderHook(useScoreboard);
+
+        act(() => result.current.startMatch("Mexico", "Canada"));
+
+        act(() => result.current.updateScore("Mexico", "Canada", 2, undefined));
+        expect(result.current.gamesInProgress).toMatchObject([
+            {
+                home: "Mexico",
+                away: "Canada",
+                homeScore: 2,
+                awayScore: 0
+            }]);
+
+        act(() => result.current.updateScore("Mexico", "Canada", "2", 3));
+        expect(result.current.gamesInProgress).toMatchObject([
+            {
+                home: "Mexico",
+                away: "Canada",
+                homeScore: 2,
+                awayScore: 3
+            }]);
+
+        act(() => result.current.updateScore("Mexico", "Canada", "two", 3));
+        expect(result.current.gamesInProgress).toMatchObject([
+            {
+                home: "Mexico",
+                away: "Canada",
+                homeScore: 0,
+                awayScore: 3
+            }]);
+    });
+
+    test("prevent negative values", () => {
+        const { result } = renderHook(useScoreboard);
+
+        act(() => result.current.startMatch("Mexico", "Canada"));
+
+        act(() => result.current.updateScore("Mexico", "Canada", 2, -5));
+        expect(result.current.gamesInProgress).toMatchObject([
+            {
+                home: "Mexico",
+                away: "Canada",
+                homeScore: 2,
+                awayScore: 0
+            }]);
+    });
+
+
+
 });

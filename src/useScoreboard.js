@@ -41,6 +41,7 @@ export default function useScoreboard() {
         startMatch,
         updateScore,
         finishMatch,
+        games,
         gamesInProgress
     }
 }

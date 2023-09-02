@@ -58,37 +58,33 @@ describe("useScoreboard test cases", () => {
         act(() => result.current.startMatch("Argentina", "Australia"));
         act(() => result.current.updateScore("Argentina", "Australia", 3, 1));
 
-        expect(result.current.gamesInProgress).toHaveLength(5);
-        expect(result.current.gamesInProgress[0]).toMatchObject({
-            home: "Uruguay",
-            away: "Italy",
-            homeScore: 6,
-            awayScore: 6
-        });
-        expect(result.current.gamesInProgress[0]).toMatchObject({
-            home: "Spain",
-            away: "Brazil",
-            homeScore: 10,
-            awayScore: 2
-        });
-        expect(result.current.gamesInProgress[0]).toMatchObject({
-            home: "Mexico",
-            away: "Canada",
-            homeScore: 0,
-            awayScore: 5
-        });
-        expect(result.current.gamesInProgress[0]).toMatchObject({
-            home: "Argentina",
-            away: "Australia",
-            homeScore: 3,
-            awayScore: 1
-        });
-        expect(result.current.gamesInProgress[0]).toMatchObject({
-            home: "Germany",
-            away: "France",
-            homeScore: 2,
-            awayScore: 2
-        });
+        expect(result.current.gamesInProgress).toMatchObject([
+            {
+                home: "Uruguay",
+                away: "Italy",
+                homeScore: 6,
+                awayScore: 6
+            }, {
+                home: "Spain",
+                away: "Brazil",
+                homeScore: 10,
+                awayScore: 2
+            }, {
+                home: "Mexico",
+                away: "Canada",
+                homeScore: 0,
+                awayScore: 5
+            }, {
+                home: "Argentina",
+                away: "Australia",
+                homeScore: 3,
+                awayScore: 1
+            }, {
+                home: "Germany",
+                away: "France",
+                homeScore: 2,
+                awayScore: 2
+            }]);
     });
 
 

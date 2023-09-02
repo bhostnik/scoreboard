@@ -18,6 +18,8 @@ function GameCard({ game, updateScore, finishMatch }) {
 
   const onUpdateClick = () => {
     updateScore(game.home, game.away, homeScore !== undefined ? parseInt(homeScore) : game.homeScore, awayScore !== undefined ? parseInt(awayScore) : game.awayScore);
+    setHomeScore(undefined);
+    setAwayScore(undefined);
   };
 
   const onCancelClick = () => {
@@ -26,7 +28,7 @@ function GameCard({ game, updateScore, finishMatch }) {
   };
 
   const onFinishClick = () => {
-    setEditing(false);
+    finishMatch(game.home, game.away);
   };
 
   return (

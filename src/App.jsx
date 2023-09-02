@@ -34,7 +34,7 @@ function GameCard({ game, updateScore, finishMatch }) {
   return (
     <Card>
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography gutterBottom variant="h5" component="h2">
+        <Typography gutterBottom variant="h5">
           {game.home + " - " + game.away}
         </Typography>
         <Grid container spacing={3}>
@@ -175,38 +175,44 @@ function App() {
       <Container>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            <Container>
-              <Grid container spacing={2}>
-                {Object.values(games).map((game) => (
-                  <Grid item key={game.index} xs={12} sm={6}>
-                    <GameCard game={game} updateScore={updateScore} finishMatch={finishMatch} />
+            <Paper sx={{ p: 2 }}>
+              <Typography gutterBottom variant="h4">Game Administration</Typography>
+              <Container>
+                <Grid container spacing={2}>
+                  {Object.values(games).map((game) => (
+                    <Grid item key={game.index} xs={12} sm={6}>
+                      <GameCard game={game} updateScore={updateScore} finishMatch={finishMatch} />
+                    </Grid>
+                  ))}
+                  <Grid item key="add" xs={12} sm={6}>
+                    <AddCard startMatch={startMatch} />
                   </Grid>
-                ))}
-                <Grid item key="add" xs={12} sm={6}>
-                  <AddCard startMatch={startMatch} />
                 </Grid>
-              </Grid>
-            </Container>
+              </Container>
+            </Paper>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Table sx={{ minWidth: 400 }} aria-label="scoreboard results">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Home team</TableCell>
-                  <TableCell>Away team</TableCell>
-                  <TableCell>Score</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-              {gamesInProgress.map((game) => (
-                <TableRow key={game.index}>
-                  <TableCell>{game.home}</TableCell>
-                  <TableCell>{game.away}</TableCell>
-                  <TableCell>{`${game.homeScore} - ${game.awayScore}  , ${game.index}`}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-            </Table>
+            <Paper sx={{ p: 2 }}>
+              <Typography gutterBottom variant="h4">Scoreboard</Typography>
+              <Table sx={{ minWidth: 400 }} aria-label="scoreboard results">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Home team</TableCell>
+                    <TableCell>Away team</TableCell>
+                    <TableCell>Score</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {gamesInProgress.map((game) => (
+                    <TableRow key={game.index}>
+                      <TableCell>{game.home}</TableCell>
+                      <TableCell>{game.away}</TableCell>
+                      <TableCell>{`${game.homeScore} - ${game.awayScore}`}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Paper>
           </Grid>
         </Grid>
       </Container>

@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import useScoreboard from '../useScoreboard';
+import useScoreboard from '../components/useScoreboard';
 
 describe("useScoreboard test cases", () => {
 

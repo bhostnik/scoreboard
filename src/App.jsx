@@ -13,14 +13,6 @@ import useScoreboard from './components/useScoreboard';
 function App() {
   const { startMatch, updateScore, finishMatch, games, gamesInProgress } = useScoreboard();
 
-  useEffect(() => {
-    startMatch("Slovenia", "Slovakia");
-    startMatch("Joe", "Mike");
-    startMatch("Niko", "Tone");
-    startMatch("Pehta", "Uruguay");
-    updateScore("Slovenia", "Slovakia", 2, 3);
-  }, []);
-
   return (
     <Container>
       <Grid container spacing={2}>

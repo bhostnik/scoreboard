@@ -10,6 +10,8 @@ The application is split in two parts:
 - Administration (left panel) - enables starting, updating and ending games.
 - Scoreboard (right panel) - lists live results, ordered as suggested.
 
+![Screenshot](screenshot.png?raw=true "Screenshot")
+
 ## Instalation and running
 
 Clone the repository and run:

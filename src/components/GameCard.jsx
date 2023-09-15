@@ -10,9 +10,10 @@ import React, { useState } from 'react';
 export default function GameCard({ game, updateScore, finishMatch }) {
     const [homeScore, setHomeScore] = useState(undefined);
     const [awayScore, setAwayScore] = useState(undefined);
+    const [playerName, setPlayerName] = useState(undefined);
 
     const onUpdateClick = () => {
-        updateScore(game.home, game.away, homeScore !== undefined ? parseInt(homeScore) : game.homeScore, awayScore !== undefined ? parseInt(awayScore) : game.awayScore);
+        updateScore(game.home, game.away, homeScore !== undefined ? parseInt(homeScore) : game.homeScore, awayScore !== undefined ? parseInt(awayScore) : game.awayScore, playerName);
         setHomeScore(undefined);
         setAwayScore(undefined);
     };
@@ -33,7 +34,7 @@ export default function GameCard({ game, updateScore, finishMatch }) {
                     {game.home + " - " + game.away}
                 </Typography>
                 <Grid container spacing={3}>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={4}>
                         <TextField
                             id="homeScore"
                             name="homeScore"
@@ -45,7 +46,7 @@ export default function GameCard({ game, updateScore, finishMatch }) {
                             onChange={(e) => setHomeScore(e.target.value)}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={4}>
                         <TextField
                             id="awayScore"
                             name="awayScore"
@@ -55,6 +56,18 @@ export default function GameCard({ game, updateScore, finishMatch }) {
                             variant="standard"
                             value={awayScore !== undefined ? awayScore : game.awayScore}
                             onChange={(e) => setAwayScore(e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <TextField
+                            id="playerName"
+                            name="playerName"
+                            label="Player"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            value={playerName}
+                            onChange={(e) => setPlayerName(e.target.value)}
                         />
                     </Grid>
                 </Grid>

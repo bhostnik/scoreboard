@@ -23,14 +23,31 @@ export default function useScoreboard() {
 
         setGames(g => (
             g[key] ? g : //prevent readding an existing game
-            { ...g, [key]: { home, away, homeScore: 0, awayScore: 0, index: maxIndex(g)+1 } }
+            { ...g, [key]: { home, away, homeScore: 0, awayScore: 0, startingTime: Date.now(), times: [], playerNames: [], index: maxIndex(g)+1 } }
         ));
     }
 
-    const updateScore = (home, away, homeScore, awayScore) => {
+    const updateScore = (home, away, homeScore, awayScore, playerName) => {
         const key = getKey(home, away);
 
-        setGames(g => ({ ...g, [key]: { ...g[key], home, away, homeScore: safeScore(homeScore), awayScore: safeScore(awayScore) } }));
+        setGames((g) => {
+            let oldHomeScore = g[key].homeScore;
+
+            let newHomeScore = safeScore(homeScore);
+            let newAwayScore = safeScore(awayScore);
+
+            if ((newHomeScore+newAwayScore - (g[key].homeScore+g[key].awayScore)) != 1){
+                return g; //score change more than one, no changes
+            }
+
+            let initials = playerName.split(' ').map(s => s && s.toUpperCase().substring(0,1)).join('.');
+    
+            let times = [...g[key].times, Date.now() - g[key].startingTime];
+            let playerNames = [...g[key].playerNames, initials];
+
+            return { ...g, [key]: { ...g[key], home, away, homeScore: newHomeScore, awayScore: newAwayScore, times, playerNames } };
+        });
+  
     }
 
     const finishMatch = (home, away) => {

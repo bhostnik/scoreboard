@@ -49,10 +49,11 @@ function App() {
                   <TableRow key={game.index}>
                     <TableCell>{game.home}</TableCell>
                     <TableCell>{game.away}</TableCell>
-                    <TableCell>{`${game.homeScore} - ${game.awayScore}`}</TableCell>
+                    <TableCell>{game.homeScore + ' - ' + game.awayScore + ' [' + game.times.map((t,index) => Math.round(t / (1000*60)) + ' ' + game.playerNames[index]).join(', ')  + ']'}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
+
             </Table>
           </Paper>
         </Grid>
